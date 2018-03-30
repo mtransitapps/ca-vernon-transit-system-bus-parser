@@ -149,11 +149,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144021", // Westbound Coldstream Creek at McClounie
 								"144027", // ++
-								"144000", // Downtown Exchange Bay A
+								"144275", // Downtown Exchange Bay D
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144275", // Downtown Exchange Bay D
 								"144012", // ++
 								"144021", // Westbound Coldstream Creek at McClounie
 						})) //
@@ -179,7 +179,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Downtown Vernon") //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144276", // Downtown Exchange Bay F
 								"144084", // ++
 								"144094", // Eastbound 58 Ave at 20 St #Walmart
 						})) //
@@ -187,7 +187,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144094", // Eastbound 58 Ave at 20 St #Walmart
 								"144103", // ++
-								"144000", // Downtown Exchange Bay A
+								"144276", // Downtown Exchange Bay F
 						})) //
 				.compileBothTripSort());
 		map2.put(4L, new RouteTripSpec(4L, //
@@ -195,7 +195,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_STRING, "Downtown Vernon") //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144275", // Downtown Exchange Bay D
 								"144116", // ++
 								"144123", // Southbound 18 St at 30 Ave
 						})) //
@@ -203,7 +203,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144123", // Southbound 18 St at 30 Ave
 								"144131", // ++
-								"144000", // Downtown Exchange Bay A
+								"144275", // Downtown Exchange Bay D
 						})) //
 				.compileBothTripSort());
 		map2.put(5L, new RouteTripSpec(5L, //
@@ -213,11 +213,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144147", // Northbound Okanagan at S Vernon
 								"144158", // ++
-								"144000", // Downtown Exchange Bay A
+								"144276", // Downtown Exchange Bay F
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144276", // Downtown Exchange Bay F
 								"144140", // ++
 								"144147", // Northbound Okanagan at S Vernon
 						})) //
@@ -229,11 +229,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144170", // Northbound 9330 block Hwy 97
 								"144175", // ++
-								"144000", // Downtown Exchange Bay A
+								"144037", // Downtown Exchange Bay C
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144037", // Downtown Exchange Bay C
 								"144285", // ++
 								"144170", // Northbound 9330 block Hwy 97
 						})) //
@@ -245,12 +245,33 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144207", // Westbound Lakeshore at Tronson
 								"144216", // ++
+								"144111", // ==
+								"144038", // Downtown Exchange Bay B
 								"144000", // Downtown Exchange Bay A
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"144000", // Downtown Exchange Bay A
-								"144192", // ++
+								"144038", // Downtown Exchange Bay B
+								"144178", // ==
+								"144184", // ==
+								"144186", // == xx
+								"144187", // ==
+								"144189", // ==
+								//
+								"144190", // !=
+								"144197", // !=
+								//
+								"144310", // != xx
+								"144311", // != xx
+								"144312", // !=
+								"144313", // !=
+								"144250", // !=
+								"144310", // != xx
+								"144311", // != xx
+								//
+								"144186", // == xx
+								"144199", // ==
 								"144207", // Westbound Lakeshore at Tronson
 						})) //
 				.compileBothTripSort());
@@ -261,13 +282,69 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144257", // Northbound Tronson at Bella Vista
 								"144215", // ++
-								"144000", // Downtown Exchange Bay A
+								"144037", // Downtown Exchange Bay C
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"144000", // Downtown Exchange Bay A
+						"144037", // Downtown Exchange Bay C
 								"144251", // ++
 								"144257", // Northbound Tronson at Bella Vista
+						})) //
+				.compileBothTripSort());
+		map2.put(60L, new RouteTripSpec(60L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Enderby", // Amstrong
+				1, MTrip.HEADSIGN_TYPE_STRING, "Vernon") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"144274", // Downtown Exchange Bay E
+								"144045", // ==
+								"106017", // !=
+								"144084", // ==
+								"544004", // ==
+								"144229", // Northbound 3200 block Smith
+								"144294", // Eastbound Mill at George
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"144294", // Eastbound Mill at George
+								"144292", // Southbound Smith at Pleasant Valley
+								"144274", // Downtown Exchange Bay E
+						})) //
+				.compileBothTripSort());
+		map2.put(61L, new RouteTripSpec(61L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Lumby", // Lavington
+				1, MTrip.HEADSIGN_TYPE_STRING, "Vernon") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"144000", // Downtown Exchange Bay A
+								"544010", // == Eastbound Hwy 6 at Freeman
+								"544008", // !=
+								"144246", // ==
+								"144266", // Southbound Norris at Glencaird
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"144266", // Southbound Norris at Glencaird
+								"144281", // ==
+								"544007", // !=
+								"544006", // Westbound Hwy 6 at Freeman
+								"144000", // Downtown Exchange Bay A
+						})) //
+				.compileBothTripSort());
+		map2.put(90L, new RouteTripSpec(90L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Vernon", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "UBCO") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"140104", // Northbound Alumni Ave at Transit Way Bay E
+								"103654", // ++
+								"144274", // Downtown Exchange Bay E
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"144274", // Downtown Exchange Bay E
+								"144265", // ++
+								"140104", // Northbound Alumni Ave at Transit Way Bay E
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -276,7 +353,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
-			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
 		}
 		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
 	}
@@ -292,7 +369,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()), this);
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
