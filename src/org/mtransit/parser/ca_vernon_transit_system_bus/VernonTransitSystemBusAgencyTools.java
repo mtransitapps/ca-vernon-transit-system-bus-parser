@@ -282,11 +282,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144257", // Northbound Tronson at Bella Vista
 								"144215", // ++
-								"144037", // Downtown Exchange Bay C
+								"144038", // Downtown Exchange Bay B
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"144037", // Downtown Exchange Bay C
+						"144038", // Downtown Exchange Bay B
 								"144251", // ++
 								"144257", // Northbound Tronson at Bella Vista
 						})) //
