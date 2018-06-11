@@ -41,8 +41,6 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		new VernonTransitSystemBusAgencyTools().start(args);
 	}
 
-	@Deprecated
-	private static final String INCLUDE_ROUTE_SHORT_NAME; // DEBUG
 
 	private HashSet<String> serviceIds;
 
