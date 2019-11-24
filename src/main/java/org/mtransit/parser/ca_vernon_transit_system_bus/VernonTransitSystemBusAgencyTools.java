@@ -126,14 +126,12 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			case 6: return "01AEF0";
 			case 7: return "00AB4F";
 			case 8: return "B3AB7D";
+			case 9: return "E170AA";
 			case 11: return "FCAF18";
 			case 60: return "A7439B";
 			case 61: return "B3B828";
 			case 90: return AGENCY_COLOR_BLUE;
 			// @formatter:on
-			}
-			if (isGoodEnoughAccepted()) {
-				return AGENCY_COLOR_BLUE;
 			}
 			System.out.printf("\nUnexpected route color for %s!\n", gRoute);
 			System.exit(-1);
