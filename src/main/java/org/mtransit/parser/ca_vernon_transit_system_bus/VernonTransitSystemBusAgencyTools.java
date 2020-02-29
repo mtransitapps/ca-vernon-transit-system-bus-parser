@@ -150,6 +150,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144021", // Westbound Coldstream Creek at McClounie
 								"144027", // ++
+								"144030", // Kalamalka Lake at Kalamalka
 								"144275", // Downtown Exchange Bay D
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
@@ -182,6 +183,10 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"144276", // Downtown Exchange Bay F
 								"144084", // ++
+								"144087", // ==
+								"144319", // !=
+								"144088", // !=
+								"144089", // ==
 								"144094", // Eastbound 58 Ave at 20 St #Walmart
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
@@ -404,6 +409,16 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
+		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
+		if (mTrip.getRouteId() == 9L) {
+			if (Arrays.asList( //
+					"Outbound", //
+					"North End" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("North End", mTrip.getHeadsignId());
+				return true;
+			}
+		}
 		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
 		System.exit(-1);
 		return false;
