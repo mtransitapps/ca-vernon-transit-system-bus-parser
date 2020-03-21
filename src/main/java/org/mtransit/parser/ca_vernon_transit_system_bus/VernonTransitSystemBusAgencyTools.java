@@ -297,26 +297,6 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 								"144257", // Northbound Tronson at Bella Vista
 						})) //
 				.compileBothTripSort());
-		map2.put(60L, new RouteTripSpec(60L, //
-				0, MTrip.HEADSIGN_TYPE_STRING, "Enderby", // Amstrong
-				1, MTrip.HEADSIGN_TYPE_STRING, "Vernon") //
-				.addTripSort(0, //
-						Arrays.asList(new String[] { //
-						"144274", // Downtown Exchange Bay E
-								"144045", // ==
-								"106017", // !=
-								"144084", // ==
-								"544004", // ==
-								"144229", // Northbound 3200 block Smith
-								"144294", // Eastbound Mill at George
-						})) //
-				.addTripSort(1, //
-						Arrays.asList(new String[] { //
-						"144294", // Eastbound Mill at George
-								"144292", // Southbound Smith at Pleasant Valley
-								"144274", // Downtown Exchange Bay E
-						})) //
-				.compileBothTripSort());
 		map2.put(61L, new RouteTripSpec(61L, //
 				0, MTrip.HEADSIGN_TYPE_STRING, "Lumby", // Lavington
 				1, MTrip.HEADSIGN_TYPE_STRING, "Vernon") //
@@ -392,6 +372,9 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern EXCHANGE = Pattern.compile("((^|\\W){1}(exchange)(\\W|$){1})", Pattern.CASE_INSENSITIVE);
 	private static final String EXCHANGE_REPLACEMENT = "$2" + EXCH + "$4";
 
+	private static final Pattern STARTS_WITH_DASH_ = Pattern.compile("^.+- ", Pattern.CASE_INSENSITIVE);
+	private static final String STARTS_WITH_DASH_REPLACEMENT = StringUtils.EMPTY;
+
 	private static final Pattern CLEAN_P1 = Pattern.compile("[\\s]*\\([\\s]*");
 	private static final String CLEAN_P1_REPLACEMENT = " (";
 	private static final Pattern CLEAN_P2 = Pattern.compile("[\\s]*\\)[\\s]*");
@@ -399,6 +382,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
+		tripHeadsign = STARTS_WITH_DASH_.matcher(tripHeadsign).replaceAll(STARTS_WITH_DASH_REPLACEMENT);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
@@ -419,16 +403,23 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		}
+		if (mTrip.getRouteId() == 60L) {
+			if (Arrays.asList( //
+					"Armstrong Only", //
+					"Amstrong" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Amstrong", mTrip.getHeadsignId());
+				return true;
+			}
+		}
 		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
 		System.exit(-1);
 		return false;
 	}
 
-	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
-
 	@Override
 	public String cleanStopName(String gStopName) {
-		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
+		gStopName = CleanUtils.cleanBounds(gStopName);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
