@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.mtransit.parser.CleanUtils;
 import org.mtransit.parser.DefaultAgencyTools;
+import org.mtransit.parser.MTLog;
 import org.mtransit.parser.Pair;
 import org.mtransit.parser.SplitUtils;
 import org.mtransit.parser.SplitUtils.RouteTripSpec;
@@ -46,11 +47,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void start(String[] args) {
-		System.out.printf("\nGenerating Vernon Regional Transit System bus data...");
+		MTLog.log("Generating Vernon Regional Transit System bus data...");
 		long start = System.currentTimeMillis();
 		this.serviceIds = extractUsefulServiceIds(args, this, true);
 		super.start(args);
-		System.out.printf("\nGenerating Vernon Regional Transit System bus data... DONE in %s.\n", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+		MTLog.log("Generating Vernon Regional Transit System bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
 	}
 
 	@Override
@@ -133,8 +134,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			case 90: return AGENCY_COLOR_BLUE;
 			// @formatter:on
 			}
-			System.out.printf("\nUnexpected route color for %s!\n", gRoute);
-			System.exit(-1);
+			MTLog.logFatal("Unexpected route color for %s!", gRoute);
 			return null;
 		}
 		return super.getRouteColor(gRoute);
@@ -375,6 +375,9 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern STARTS_WITH_DASH_ = Pattern.compile("^.+- ", Pattern.CASE_INSENSITIVE);
 	private static final String STARTS_WITH_DASH_REPLACEMENT = StringUtils.EMPTY;
 
+	private static final Pattern ENDS_WITH_DASH_ = Pattern.compile("\\-$", Pattern.CASE_INSENSITIVE);
+	private static final String ENDS_WITH_DASH_REPLACEMENT = StringUtils.EMPTY;
+
 	private static final Pattern CLEAN_P1 = Pattern.compile("[\\s]*\\([\\s]*");
 	private static final String CLEAN_P1_REPLACEMENT = " (";
 	private static final Pattern CLEAN_P2 = Pattern.compile("[\\s]*\\)[\\s]*");
@@ -382,7 +385,9 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
+		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = STARTS_WITH_DASH_.matcher(tripHeadsign).replaceAll(STARTS_WITH_DASH_REPLACEMENT);
+		tripHeadsign = ENDS_WITH_DASH_.matcher(tripHeadsign).replaceAll(ENDS_WITH_DASH_REPLACEMENT);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
@@ -406,14 +411,13 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		if (mTrip.getRouteId() == 60L) {
 			if (Arrays.asList( //
 					"Armstrong Only", //
-					"Amstrong" //
+					"Enderby" //
 			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("Amstrong", mTrip.getHeadsignId());
+				mTrip.setHeadsignString("Enderby", mTrip.getHeadsignId());
 				return true;
 			}
 		}
-		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
-		System.exit(-1);
+		MTLog.logFatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
 		return false;
 	}
 
