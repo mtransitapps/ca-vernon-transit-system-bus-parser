@@ -139,13 +139,12 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 			case 90: return AGENCY_COLOR_BLUE;
 			// @formatter:on
 			}
-			MTLog.logFatal("Unexpected route color for %s!", gRoute);
-			return null;
+			throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
 		}
 		return super.getRouteColor(gRoute);
 	}
 
-	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
+	private static final HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<>();
@@ -173,10 +172,14 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList( //
 								"144000", // Downtown Exchange Bay A
 								"144049", // ++
-								"144061" // Northbound Pleasant Valley at Silver Star
+								"144060" // Pleasant Valley at 47 Ave =>
 						)) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList( //
+								"144060", // == Pleasant Valley at 47 Ave <=
+								"144061", // != Pleasant Valley at Silver Star
+								"144323", // != 48 Ave at Pleasant Valley Westbound !=
+								"144169", // == 20 St farside 50 Ave
 								"144061", // Northbound Pleasant Valley at Silver Star
 								"144068", // ++
 								"144000" // Downtown Exchange Bay A
@@ -373,7 +376,10 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		mTrip.setHeadsignString(cleanTripHeadsign(gTrip.getTripHeadsign()), gTrip.getDirectionId());
+		mTrip.setHeadsignString(
+			cleanTripHeadsign(gTrip.getTripHeadsignOrDefault()),
+			gTrip.getDirectionIdOrDefault()
+		);
 	}
 
 	private static final String EXCH = "Exch";
@@ -426,8 +432,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 				return true;
 			}
 		}
-		MTLog.logFatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
-		return false;
+		throw new MTLog.Fatal("Unexpected trips to merge %s & %s!", mTrip, mTripToMerge);
 	}
 
 	@NotNull
