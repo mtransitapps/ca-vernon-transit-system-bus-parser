@@ -3,7 +3,6 @@ package org.mtransit.parser.ca_vernon_transit_system_bus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mtransit.commons.CleanUtils;
-import org.mtransit.commons.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
 import org.mtransit.parser.gtfs.data.GRoute;
@@ -11,7 +10,7 @@ import org.mtransit.parser.mt.data.MAgency;
 
 import java.util.regex.Pattern;
 
-import static org.mtransit.parser.StringUtils.EMPTY;
+import static org.mtransit.commons.StringUtils.EMPTY;
 
 // https://www.bctransit.com/open-data
 // https://www.bctransit.com/data/gtfs/vernon.zip
@@ -39,8 +38,18 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public long getRouteId(@NotNull GRoute gRoute) {
-		return Long.parseLong(gRoute.getRouteShortName()); // use route short name as route ID
+	public boolean defaultRouteIdEnabled() {
+		return true;
+	}
+
+	@Override
+	public boolean useRouteShortNameForRouteId() {
+		return true;
+	}
+
+	@Override
+	public boolean defaultAgencyColorEnabled() {
+		return true;
 	}
 
 	private static final String AGENCY_COLOR_GREEN = "34B233";// GREEN (from PDF Corporate Graphic Standards)
@@ -56,29 +65,30 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	@Nullable
 	@Override
-	public String getRouteColor(@NotNull GRoute gRoute) {
-		if (StringUtils.isEmpty(gRoute.getRouteColor())) {
-			final int rsn = Integer.parseInt(gRoute.getRouteShortName());
-			switch (rsn) {
-			// @formatter:off
-			case 1: return "004B8E";
-			case 2: return "8AC641";
-			case 3: return "F68C1F";
-			case 4: return "8E0C3A";
-			case 5: return "E81D89";
-			case 6: return "01AEF0";
-			case 7: return "00AB4F";
-			case 8: return "B3AB7D";
-			case 9: return "E170AA";
-			case 11: return "FCAF18";
-			case 60: return "A7439B";
-			case 61: return "B3B828";
-			case 90: return AGENCY_COLOR_BLUE;
-			// @formatter:on
-			}
-			throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
+	public String provideMissingRouteColor(@NotNull GRoute gRoute) {
+		switch (gRoute.getRouteShortName()) {
+		// @formatter:off
+		case "1": return "004B8E";
+		case "2": return "8AC641";
+		case "3": return "F68C1F";
+		case "4": return "8E0C3A";
+		case "5": return "E81D89";
+		case "6": return "01AEF0";
+		case "7": return "00AB4F";
+		case "8": return "B3AB7D";
+		case "9": return "E170AA";
+		case "11": return "FCAF18";
+		case "60": return "A7439B";
+		case "61": return "B3B828";
+		case "90": return AGENCY_COLOR_BLUE;
+		// @formatter:on
 		}
-		return super.getRouteColor(gRoute);
+		throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
+	}
+
+	@Override
+	public boolean defaultRouteLongNameEnabled() {
+		return true;
 	}
 
 	@Override
