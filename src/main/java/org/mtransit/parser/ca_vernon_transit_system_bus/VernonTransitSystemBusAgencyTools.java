@@ -97,13 +97,11 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public boolean directionSplitterEnabled(long routeId) {
-		//noinspection RedundantIfStatement
-		if (routeId == 1L
-				|| routeId == 6L) {
+	public boolean directionOverrideId(long routeId) {
+		if (routeId == 1L) {
 			return true; // merge trips because 2 directions overlap
 		}
-		return false;
+		return super.directionOverrideId(routeId);
 	}
 
 	@Override
