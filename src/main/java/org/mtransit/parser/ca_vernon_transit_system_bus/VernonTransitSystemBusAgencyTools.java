@@ -92,7 +92,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
-	public boolean directionSplitterEnabled() {
+	public boolean directionSplitterEnabled(long routeId) {
 		return true;
 	}
 
