@@ -78,9 +78,17 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		case "8": return "B3AB7D";
 		case "9": return "E170AA";
 		case "11": return "FCAF18";
+		case "21": return AGENCY_COLOR_BLUE;
+		case "22": return AGENCY_COLOR_BLUE;
+		case "23": return AGENCY_COLOR_BLUE;
+		case "24": return AGENCY_COLOR_BLUE;
+		case "25": return AGENCY_COLOR_BLUE;
+		case "41": return AGENCY_COLOR_BLUE;
+		case "42": return AGENCY_COLOR_BLUE;
+		case "43": return AGENCY_COLOR_BLUE;
 		case "60": return "A7439B";
 		case "61": return "B3B828";
-		case "90": return AGENCY_COLOR_BLUE;
+		case "90": return "AB5B38";
 		// @formatter:on
 		}
 		throw new MTLog.Fatal("Unexpected route color for %s!", gRoute);
