@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 import static org.mtransit.commons.StringUtils.EMPTY;
 
 // https://www.bctransit.com/open-data
-// https://www.bctransit.com/data/gtfs/vernon.zip
+// The North Okanagan Region consists of
+// Shuswap and Vernon.
 public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
@@ -38,13 +39,27 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
+	public boolean excludeRoute(@NotNull GRoute gRoute) {
+		final int rsn = Integer.parseInt(gRoute.getRouteShortName());
+		if (rsn > 20 && rsn < 60) {
+			return EXCLUDE; // part of Shuswap TS
+		}
+		return super.excludeRoute(gRoute);
+	}
+
+	@Override
 	public boolean defaultRouteIdEnabled() {
 		return true;
 	}
 
 	@Override
 	public boolean useRouteShortNameForRouteId() {
-		return true;
+		return false; // route ID used by GTFS RT
+	}
+
+	@Override
+	public @Nullable String getRouteIdCleanupRegex() {
+		return "\\-[A-Z]+$";
 	}
 
 	@Override
@@ -63,6 +78,7 @@ public class VernonTransitSystemBusAgencyTools extends DefaultAgencyTools {
 		return AGENCY_COLOR;
 	}
 
+	@SuppressWarnings("DuplicateBranchesInSwitch")
 	@Nullable
 	@Override
 	public String provideMissingRouteColor(@NotNull GRoute gRoute) {
